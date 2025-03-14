@@ -1,27 +1,29 @@
 import React from 'react'
-import { Book } from '../../../models/Book'
-interface BookProps {
-    book: Book;
-
+import Books from '../../../models/Books';
+interface BookPropsInterface {
+    books: Books;
 }
-const BookProps: React.FC<BookProps> = ({ book }) => {
+
+const BooksPropeties: React.FC<BookPropsInterface> = (props) => {
+    // console.log("Book data:", props.books); 
     return (
         <div className="col-md-3 mt-2">
             <div className="card">
-                <img src={book.imageUrl}
+                <img
+                    src={""}
                     className="card-img-top"
-                    alt={book.title}
+                    alt={props.books.titleBook}
                     style={{ height: '200px' }}
                 />
                 <div className="card-body">
-                    <h5 className="card-title">{book.title}</h5>
-                    <p className="card-text">{book.description}</p>
+                    <h5 className="card-title">{props.books.titleBook}</h5>
+                    <p className="card-text">{props.books.description}</p>
                     <div className="price">
                         <span className="original-price">
-                            <del>{book.originalPrice.toLocaleString()} VND</del>
+                            <del>{props.books.priceFirst} VND</del>
                         </span>
                         <span className="discounted-price">
-                            <strong>{book.price.toLocaleString()} VND</strong>
+                            <strong>{props.books.priceSecond} VND</strong>
                         </span>
                     </div>
                     <div className="row mt-2" role="group">
@@ -41,4 +43,4 @@ const BookProps: React.FC<BookProps> = ({ book }) => {
         </div>
     );
 }
-export default BookProps
+export default BooksPropeties

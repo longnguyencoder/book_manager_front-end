@@ -6,11 +6,15 @@ import Footer from './layouts/Footer';
 import HomePages from './layouts/HomePages/HomePages';
 
 
+
+
 function App() {
+
   return (
     <div className='App'>
       <Navbar />
       <HomePages />
+
       <Footer />
     </div>
   );
