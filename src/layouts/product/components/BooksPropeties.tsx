@@ -1,16 +1,63 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Books from '../../../models/Books';
+import Images from '../../../models/Images';
+import { getAllImages } from '../../../api/ImageApi';
 interface BookPropsInterface {
     books: Books;
 }
 
 const BooksPropeties: React.FC<BookPropsInterface> = (props) => {
+
+    const idBook = props.books.idBook;
+
+    const [listImages, setListImages] = useState<Images[]>([]);
+    const [loadData, setLoadData] = useState(true);
+    const [errorData, setErrorData] = useState(null);
+
+    // lấy sản phẩm ra
+    useEffect(() => {
+        getAllImages(idBook).then(
+            imageData => {
+                setListImages(listImages);
+                setLoadData(false);
+            }
+        ).catch(
+            error => {
+                setLoadData(false);
+                setErrorData(error.message);
+
+            }
+        );
+    }, []);
+
+
+
+
+    if (loadData) {
+        return (
+            <div>
+                <h1>đang tải dữ liệu</h1>
+            </div>
+        );
+    }
+    if (errorData) {
+        return (
+            <div>
+                <h1>gặp lỗi: {errorData}</h1>
+            </div>
+        );
+    }
+
+    let dataimages: string = "";
+    if (listImages[0] && listImages[0].imageData) {
+        dataimages = listImages[0].imageData;
+    }
     // console.log("Book data:", props.books); 
     return (
         <div className="col-md-3 mt-2">
             <div className="card">
                 <img
-                    src={""}
+                    src={dataimages}
                     className="card-img-top"
                     alt={props.books.titleBook}
                     style={{ height: '200px' }}

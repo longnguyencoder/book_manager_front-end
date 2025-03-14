@@ -1,21 +1,7 @@
 import React from 'react'
 import Books from '../models/Books'
 import { wait } from '@testing-library/user-event/dist/utils';
-
-async function request(endpoint:string) {
-
-    // truy cập đến đường dẫn
-    const response = await fetch(endpoint);
-    
-
-    // neeusb trả về bị lỗi
-    if(!response.ok){
-        throw new Error(`no request ${endpoint}`);
-
-    }
-
-    return response.json();
-}
+import { my_request } from './Request';
 
 export async function getAllBooks():Promise<Books[]> {
     const ketQua:Books[] = [];
@@ -23,7 +9,7 @@ export async function getAllBooks():Promise<Books[]> {
         const duongdan:string='http://localhost:8080/books';
 
         // goi phuong thuc requesst
-       const response =await request(duongdan);
+       const response =await my_request(duongdan);
        
        const responseData = response._embedded.books; // Kiểm tra tránh lỗi null
 
