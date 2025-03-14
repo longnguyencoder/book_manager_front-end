@@ -1,11 +1,13 @@
 import React from 'react';
 
 import './App.css';
+import Navbar from './layouts/Navbar';
+
 
 function App() {
   return (
-    <div className="bg-primary">
-        hello
+    <div className='App'>
+      <Navbar />
     </div>
   );
 }
