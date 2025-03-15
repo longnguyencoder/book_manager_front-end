@@ -12,8 +12,8 @@ const Carousel: React.FC = () => {
   // lấy sản phẩm ra
   useEffect(() => {
     get3Books().then(
-      bookData => {
-        setListProduct(bookData);
+      kq => {
+        setListProduct(kq.ketQua);
         setLoadData(false);
       }
     ).catch(

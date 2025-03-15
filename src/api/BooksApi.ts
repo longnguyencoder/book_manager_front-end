@@ -3,7 +3,14 @@ import Books from '../models/Books'
 import { wait } from '@testing-library/user-event/dist/utils';
 import { my_request } from './Request';
 
-async function getBooks(duongdan:string):Promise<Books[]> {
+    interface KetQuaInterFace{
+        ketQua:Books[];
+        totalPage: number;
+        totalBook: number;
+    }
+
+
+async function getBooks(duongdan:string):Promise<KetQuaInterFace> {
     const ketQua:Books[] = [];
     
 
@@ -13,6 +20,12 @@ async function getBooks(duongdan:string):Promise<Books[]> {
        const responseData = response._embedded.books; // Kiểm tra tránh lỗi null
 
         console.log(responseData);
+
+
+        // lấy thông tin trang
+        const sumPage:number= response.page.totalPages;
+        const sumBook:number = response.page.totalElements;
+
         for(const key in responseData){
            ketQua.push({
                 idBook: responseData[key].idBook,
@@ -27,16 +40,16 @@ async function getBooks(duongdan:string):Promise<Books[]> {
             });
         }
 
-    return ketQua;
+    return {ketQua: ketQua, totalPage:sumPage, totalBook:sumBook};
 }
-export async function getAllBooks():Promise<Books[]> {
+export async function getAllBooks(trangHienTai:number):Promise<KetQuaInterFace> {
     // xacs ddinh duong dan
-    const duongdan:string='http://localhost:8080/books?sort=idBook,desc';
+    const duongdan:string=`http://localhost:8080/books?sort=idBook,desc&size=8&page=${trangHienTai}`;
     return getBooks(duongdan);
     
 }
 
-export async function get3Books():Promise<Books[]> {
+export async function get3Books():Promise<KetQuaInterFace> {
     // xacs ddinh duong dan
     const duongdan:string='http://localhost:8080/books?sort=idBook,desc&page=0&size=3';
     return getBooks(duongdan);
