@@ -56,4 +56,18 @@ export async function get3Books():Promise<KetQuaInterFace> {
     
 }
 
+ // enpoint để tìm kiếm
+// http://localhost:8080/books/search/findByTitleBookContaining?name=v%E1%BA%ADt%20l%C3%BD
+
+export async function searchTitleBook(keySearch: string):Promise<KetQuaInterFace> {
+    // xacs ddinh duong dan
+    let duongdan:string='http://localhost:8080/books?sort=idBook,desc&page=0';
+
+    if(keySearch !== ''){
+        duongdan=`http://localhost:8080/books/search/findByTitleBookContaining?sort=idBook,desc&page=0&name=${keySearch}`;
+    }
+    return getBooks(duongdan);
+    
+}
+
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './App.css';
 import Navbar from './layouts/Navbar';
@@ -9,11 +9,13 @@ import HomePages from './layouts/HomePages/HomePages';
 
 
 function App() {
+  const [tuKhoaTimKiem, setTuKhoaTimKiem] = useState('');
+
 
   return (
     <div className='App'>
-      <Navbar />
-      <HomePages />
+      <Navbar tuKhoaTimKiem={tuKhoaTimKiem} setTuKhoaTimKiem={setTuKhoaTimKiem} />
+      <HomePages tuKhoaTimKiem={tuKhoaTimKiem} />
 
       <Footer />
     </div>

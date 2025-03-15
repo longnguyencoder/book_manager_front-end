@@ -3,10 +3,13 @@ import Books from '../../models/Books';
 import BooksPropeties from './components/BooksPropeties';
 import { getAllBooks } from '../../api/BooksApi';
 import { Pagination } from '../utils/Pagination';
+import { searchTitleBook } from '../../api/BooksApi';
 
+interface ListProductsProps {
+    tuKhoaTimKiem: string;
+}
 
-
-const ListProducts: React.FC = () => {
+function ListProducts({ tuKhoaTimKiem }: ListProductsProps) {
     const [listProduct, setListProduct] = useState<Books[]>([]);
     const [loadData, setLoadData] = useState(true);
     const [errorData, setErrorData] = useState(null);
@@ -17,20 +20,34 @@ const ListProducts: React.FC = () => {
 
     // lấy sản phẩm ra -1 vì trang hieenjn tại trong spring là 0
     useEffect(() => {
-        getAllBooks(trangHienTai - 1).then(
-            kq => {
-                setListProduct(kq.ketQua);
-                setTongSoTrang(kq.totalPage);
-                setLoadData(false);
-            }
-        ).catch(
-            error => {
-                setErrorData(error.message);
-            }
-        );
-    }, [trangHienTai]);
+        if (tuKhoaTimKiem === "") {
+            getAllBooks(trangHienTai - 1).then(
+                kq => {
+                    setListProduct(kq.ketQua);
+                    setTongSoTrang(kq.totalPage);
+                    setLoadData(false);
+                }
+            ).catch(
+                error => {
+                    setErrorData(error.message);
+                }
+            );
+        } else {
+            searchTitleBook(tuKhoaTimKiem).then(
+                kq => {
+                    setListProduct(kq.ketQua);
+                    setTongSoTrang(kq.totalPage);
+                    setLoadData(false);
+                }
+            ).catch(
+                error => {
+                    setErrorData(error.message);
+                }
+            );
+        }
+    }, [trangHienTai, tuKhoaTimKiem]);
 
-    const phanTrang = (trang: number) => setTrangHienTai(trang);
+    const phanTrang = (trang: number) => { setTrangHienTai(trang); };
 
     if (loadData) {
         return (
