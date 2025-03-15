@@ -4,10 +4,9 @@ import { wait } from '@testing-library/user-event/dist/utils';
 import { my_request } from './Request';
 import Images from '../models/Images';
 
-export async function getAllImages(idBook:number):Promise<Images[]> {
+async function getOneBook(duongdan: string ):Promise<Images[]> {
     const ketQua:Images[] = [];
-    // xacs ddinh duong dan
-    const duongdan: string = `http://localhost:8080/books/${idBook}/imageBookList`;
+    
 
         // goi phuong thuc requesst
        const response =await my_request(duongdan);
@@ -27,6 +26,21 @@ export async function getAllImages(idBook:number):Promise<Images[]> {
 
     return ketQua;
     
+}
+
+
+export async function getAllImages(idBook:number):Promise<Images[]> {
+    
+    // xacs ddinh duong dan
+    const duongdan: string = `http://localhost:8080/books/${idBook}/imageBookList`;
+    return getOneBook(duongdan);
+}
+
+export async function getOneImagesBook(idBook:number):Promise<Images[]> {
+    
+    // xacs ddinh duong dan
+    const duongdan: string = `http://localhost:8080/books/${idBook}/imageBookList?sort=idImage,asc&page=0&size=1`;
+    return getOneBook(duongdan);
 }
 
 

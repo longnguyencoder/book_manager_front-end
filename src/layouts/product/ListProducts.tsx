@@ -8,7 +8,6 @@ import { error } from 'console';
 
 const ListProducts: React.FC = () => {
     const [listProduct, setListProduct] = useState<Books[]>([]);
-
     const [loadData, setLoadData] = useState(true);
     const [errorData, setErrorData] = useState(null);
 

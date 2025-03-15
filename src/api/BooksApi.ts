@@ -3,10 +3,9 @@ import Books from '../models/Books'
 import { wait } from '@testing-library/user-event/dist/utils';
 import { my_request } from './Request';
 
-export async function getAllBooks():Promise<Books[]> {
+async function getBooks(duongdan:string):Promise<Books[]> {
     const ketQua:Books[] = [];
-    // xacs ddinh duong dan
-        const duongdan:string='http://localhost:8080/books';
+    
 
         // goi phuong thuc requesst
        const response =await my_request(duongdan);
@@ -29,6 +28,18 @@ export async function getAllBooks():Promise<Books[]> {
         }
 
     return ketQua;
+}
+export async function getAllBooks():Promise<Books[]> {
+    // xacs ddinh duong dan
+    const duongdan:string='http://localhost:8080/books?sort=idBook,desc';
+    return getBooks(duongdan);
+    
+}
+
+export async function get3Books():Promise<Books[]> {
+    // xacs ddinh duong dan
+    const duongdan:string='http://localhost:8080/books?sort=idBook,desc&page=0&size=3';
+    return getBooks(duongdan);
     
 }
 

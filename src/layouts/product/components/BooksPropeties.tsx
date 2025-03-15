@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Books from '../../../models/Books';
 import Images from '../../../models/Images';
-import { getAllImages } from '../../../api/ImageApi';
-interface BookPropsInterface {
+import { getAllImages, getOneImagesBook } from '../../../api/ImageApi';
+interface CarouselItemsInterface {
     books: Books;
 }
 
-const BooksPropeties: React.FC<BookPropsInterface> = (props) => {
+const BooksPropeties: React.FC<CarouselItemsInterface> = (props) => {
 
     const idBook = props.books.idBook;
 
@@ -16,7 +16,7 @@ const BooksPropeties: React.FC<BookPropsInterface> = (props) => {
 
     // lấy sản phẩm ra
     useEffect(() => {
-        getAllImages(idBook).then(
+        getOneImagesBook(idBook).then(
             imageData => {
                 setListImages(listImages);
                 setLoadData(false);
@@ -29,9 +29,6 @@ const BooksPropeties: React.FC<BookPropsInterface> = (props) => {
             }
         );
     }, []);
-
-
-
 
     if (loadData) {
         return (
